@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Kenotariatan\AktaController;
 use App\Http\Controllers\Kenotariatan\NotarisController;
 use App\Http\Controllers\Kenotariatan\LaporanController;
+use App\Http\Controllers\Kenotariatan\PemeriksaanController;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
 /*
@@ -37,8 +38,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', [UserController::class, 'show']);
     Route::apiResource('akta', AktaController::class);
     Route::apiResource('notaris', NotarisController::class);
-    // Route::post('notaris/{id}',  [NotarisController::class, 'update']);
-
+    Route::apiResource('pemeriksaan', PemeriksaanController::class);
     Route::apiResource('laporan', LaporanController::class);
 });
 

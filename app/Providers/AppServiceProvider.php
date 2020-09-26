@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use CloudCreativity\LaravelJsonApi\LaravelJsonApi;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 
@@ -26,7 +25,5 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
-        LaravelJsonApi::defaultApi('v1');
-
     }
 }

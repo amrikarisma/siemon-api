@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Notaris extends Model
 {
     use HasFactory;
+    protected $table = 'notaris';
+
+    protected $fillable = [
+        'nama_notaris', 'no_telepon_notaris'
+    ];
 }

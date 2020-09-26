@@ -24,6 +24,7 @@ class LaporanController extends Controller
         ->leftJoin('tbl_laporan_bulanan', 'notaris.id_notaris', '=', 'tbl_laporan_bulanan.id_notaris')
         ->limit(100)
         ->get();
+
         $collection = collect($data);
         $multiplied = $collection->map(function ($item, $key) {
             $item->total_akta = Akta::where('id_notaris', $item->id_notaris)->where('tanggal_akta', 'like', '%'.date('Y').'%')->count();
@@ -32,12 +33,11 @@ class LaporanController extends Controller
             return $item;
         });
         $multiplied->all();
+
         return response([
             'success' => true,
             'message' => 'Berhasil ambil data laporan',
             'attributes' => $multiplied,
-            // 'count' => $count,
-            // 'relationships' => $relationships
         ], 200);
     }
 
@@ -70,8 +70,11 @@ class LaporanController extends Controller
      */
     public function show(Laporan $laporan)
     {
-        $data = Notaris::findOrFail($laporan->id);
-        return $data;
+        $data = Notaris::selectRaw('notaris.id_notaris, notaris.nama_notaris, tbl_laporan_bulanan.*')
+        ->leftJoin('tbl_laporan_bulanan', 'notaris.id_notaris', '=', 'tbl_laporan_bulanan.id_notaris')
+        ->where('tbl_laporan_bulanan.id', $laporan->id)
+        ->get();
+
         $collection = collect($data);
         $multiplied = $collection->map(function ($item, $key) {
             $item->total_akta = Akta::where('id_notaris', $item->id_notaris)->where('tanggal_akta', 'like', '%'.date('Y').'%')->count();
